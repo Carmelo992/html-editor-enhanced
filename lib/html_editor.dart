@@ -8,6 +8,7 @@ export 'package:html_editor_enhanced/utils/file_upload_model.dart';
 export 'package:html_editor_enhanced/utils/options.dart';
 export 'package:html_editor_enhanced/utils/utils.dart'
     hide setState, intersperse, getRandString;
+export 'package:html_editor_enhanced/src/supported_fonts.dart';
 
 export 'package:html_editor_enhanced/src/html_editor_unsupported.dart'
     if (dart.library.html) 'package:html_editor_enhanced/src/html_editor_web.dart'
