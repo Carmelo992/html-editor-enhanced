@@ -80,13 +80,13 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
                   onButtonPressed:
                       (ButtonType type, bool? status, Function? updateStatus) {
                     print(
-                        "button '${describeEnum(type)}' pressed, the current selected status is $status");
+                        "button '${type.name}' pressed, the current selected status is $status");
                     return true;
                   },
                   onDropdownChanged: (DropdownType type, dynamic changed,
                       Function(dynamic)? updateSelectedItem) {
                     print(
-                        "dropdown '${describeEnum(type)}' changed to $changed");
+                        "dropdown '${type.name}' changed to $changed");
                     return true;
                   },
                   mediaLinkInsertInterceptor:
@@ -137,7 +137,7 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
                   },*/
                     onImageUploadError: (FileUpload? file, String? base64Str,
                         UploadError error) {
-                  print(describeEnum(error));
+                  print(error.name);
                   print(base64Str ?? '');
                   if (file != null) {
                     print(file.name);

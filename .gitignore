@@ -7,3 +7,6 @@
 build/
 .idea/
 **/ios/Flutter/
+
+.flutter-plugins
+.flutter-plugins-dependencies
