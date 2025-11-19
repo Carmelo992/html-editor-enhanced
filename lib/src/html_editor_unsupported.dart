@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
@@ -11,6 +13,7 @@ class HtmlEditor extends StatelessWidget {
     this.htmlToolbarOptions = const HtmlToolbarOptions(),
     this.otherOptions = const OtherOptions(),
     this.plugins = const [],
+    required this.uploadImage,
   }) : super(key: key);
 
   /// The controller that is passed to the widget, which allows multiple [HtmlEditor]
@@ -32,6 +35,8 @@ class HtmlEditor extends StatelessWidget {
 
   /// Sets the list of Summernote plugins enabled in the editor.
   final List<Plugins> plugins;
+
+  final Future<String> Function(Uint8List)? uploadImage;
 
   @override
   Widget build(BuildContext context) {

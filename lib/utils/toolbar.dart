@@ -71,7 +71,7 @@ class ColorButtons extends Toolbar {
   final bool highlightColor;
 
   const ColorButtons({
-    this.foregroundColor = true,
+    this.foregroundColor = false,
     this.highlightColor = true,
   });
 

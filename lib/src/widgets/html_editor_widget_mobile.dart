@@ -126,7 +126,7 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                       key: toolbarKey,
                       controller: widget.controller,
                       htmlToolbarOptions: widget.htmlToolbarOptions,
-                      callbacks: widget.callbacks)
+                      callbacks: widget.callbacks, uploadImage: null,)
                   : Container(height: 0, width: 0),
               Expanded(
                 child: InAppWebView(
@@ -548,7 +548,7 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                       key: toolbarKey,
                       controller: widget.controller,
                       htmlToolbarOptions: widget.htmlToolbarOptions,
-                      callbacks: widget.callbacks)
+                      callbacks: widget.callbacks, uploadImage: null,)
                   : Container(height: 0, width: 0),
             ],
           ),

@@ -68,6 +68,7 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
             children: <Widget>[
               HtmlEditor(
                 controller: controller,
+                uploadImage: null,
                 htmlEditorOptions: HtmlEditorOptions(
                   hint: 'Your text here...',
                   shouldEnsureVisible: true,

@@ -395,15 +395,14 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
                 physics: const ClampingScrollPhysics(),
                 platform: Theme.of(context).platform,
               ),
-              child: PrimaryScrollController(
-                controller: widget.route.scrollController!,
-                child: Scrollbar(
-                  thumbVisibility: true,
-                  child: ListView(
-                    padding: kMaterialListPadding,
-                    shrinkWrap: true,
-                    children: children,
-                  ),
+              child: Scrollbar(
+                controller: widget.route.scrollController,
+                thumbVisibility: true,
+                child: ListView(
+                  controller: widget.route.scrollController!,
+                  padding: kMaterialListPadding,
+                  shrinkWrap: true,
+                  children: children,
                 ),
               ),
             ),

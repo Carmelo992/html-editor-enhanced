@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:html_editor_enhanced/src/supported_fonts.dart';
 import 'package:html_editor_enhanced/utils/utils.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -16,12 +17,14 @@ class ToolbarWidget extends StatefulWidget {
   final HtmlEditorController controller;
   final HtmlToolbarOptions htmlToolbarOptions;
   final Callbacks? callbacks;
+  final Future<String> Function(Uint8List)? uploadImage;
 
   const ToolbarWidget({
     Key? key,
     required this.controller,
     required this.htmlToolbarOptions,
     required this.callbacks,
+    required this.uploadImage,
   }) : super(key: key);
 
   @override
@@ -62,7 +65,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
   /// Sets the selected item for the font style dropdown
   String _fontSelectedItem = 'p';
 
-  String _fontNameSelectedItem = 'sans-serif';
+  SupportedFonts _fontNameSelectedItem = SupportedFonts.sanSerif;
 
   /// Sets the selected item for the font size dropdown
   double _fontSizeSelectedItem = 3;
@@ -164,16 +167,10 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
         _fontSelectedItem = 'p';
       });
     }
-    //check the font name if it matches one of the predetermined fonts and update the toolbar
-    if (['Courier New', 'sans-serif', 'Times New Roman'].contains(fontName)) {
-      setState(mounted, this.setState, () {
-        _fontNameSelectedItem = fontName;
-      });
-    } else {
-      setState(mounted, this.setState, () {
-        _fontNameSelectedItem = 'sans-serif';
-      });
-    }
+    setState(mounted, this.setState, () {
+      _fontNameSelectedItem = SupportedFontsExt.fromValue(fontName);
+    });
+
     //update the fore/back selected color if necessary
     if (colorList[0] != null && colorList[0]!.isNotEmpty) {
       setState(mounted, this.setState, () {
@@ -482,11 +479,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
               : widget.htmlToolbarOptions.dropdownBoxDecoration ??
                   BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
-                      border: Border.all(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(0.12))),
+                      border: Border.all(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.12))),
           child: CustomDropdownButtonHideUnderline(
             child: CustomDropdownButton<String>(
               elevation: widget.htmlToolbarOptions.dropdownElevation,
@@ -614,75 +607,46 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                 : widget.htmlToolbarOptions.dropdownBoxDecoration ??
                     BoxDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        border: Border.all(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.12))),
-            child: CustomDropdownButtonHideUnderline(
-              child: CustomDropdownButton<String>(
-                elevation: widget.htmlToolbarOptions.dropdownElevation,
-                icon: widget.htmlToolbarOptions.dropdownIcon,
-                iconEnabledColor: widget.htmlToolbarOptions.dropdownIconColor,
-                iconSize: widget.htmlToolbarOptions.dropdownIconSize,
-                itemHeight: widget.htmlToolbarOptions.dropdownItemHeight,
-                focusColor: widget.htmlToolbarOptions.dropdownFocusColor,
-                dropdownColor:
-                    widget.htmlToolbarOptions.dropdownBackgroundColor,
-                menuDirection:
-                    widget.htmlToolbarOptions.dropdownMenuDirection ??
-                        (widget.htmlToolbarOptions.toolbarPosition ==
-                                ToolbarPosition.belowEditor
-                            ? DropdownMenuDirection.up
-                            : DropdownMenuDirection.down),
-                menuMaxHeight:
-                    widget.htmlToolbarOptions.dropdownMenuMaxHeight ??
-                        MediaQuery.of(context).size.height / 3,
-                style: widget.htmlToolbarOptions.textStyle,
-                items: [
-                  CustomDropdownMenuItem(
-                    value: 'Courier New',
-                    child: PointerInterceptor(
-                        child: Text('Courier New',
-                            style: TextStyle(fontFamily: 'Courier'))),
-                  ),
-                  CustomDropdownMenuItem(
-                    value: 'sans-serif',
-                    child: PointerInterceptor(
-                        child: Text('Sans Serif',
-                            style: TextStyle(fontFamily: 'sans-serif'))),
-                  ),
-                  CustomDropdownMenuItem(
-                    value: 'Times New Roman',
-                    child: PointerInterceptor(
-                        child: Text('Times New Roman',
-                            style: TextStyle(fontFamily: 'Times'))),
-                  ),
-                ],
-                value: _fontNameSelectedItem,
-                onChanged: (String? changed) async {
-                  void updateSelectedItem(dynamic changed) async {
-                    if (changed is String) {
-                      setState(mounted, this.setState, () {
-                        _fontNameSelectedItem = changed;
-                      });
+                        border: Border.all(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.12))),
+            child: PointerInterceptor(
+              child: CustomDropdownButtonHideUnderline(
+                child: CustomDropdownButton<SupportedFonts>(
+                  elevation: widget.htmlToolbarOptions.dropdownElevation,
+                  icon: widget.htmlToolbarOptions.dropdownIcon,
+                  iconEnabledColor: widget.htmlToolbarOptions.dropdownIconColor,
+                  iconSize: widget.htmlToolbarOptions.dropdownIconSize,
+                  itemHeight: widget.htmlToolbarOptions.dropdownItemHeight,
+                  focusColor: widget.htmlToolbarOptions.dropdownFocusColor,
+                  dropdownColor: widget.htmlToolbarOptions.dropdownBackgroundColor,
+                  menuDirection: widget.htmlToolbarOptions.dropdownMenuDirection ??
+                      (widget.htmlToolbarOptions.toolbarPosition == ToolbarPosition.belowEditor
+                          ? DropdownMenuDirection.up
+                          : DropdownMenuDirection.down),
+                  menuMaxHeight:
+                      widget.htmlToolbarOptions.dropdownMenuMaxHeight ?? MediaQuery.of(context).size.height / 3,
+                  style: widget.htmlToolbarOptions.textStyle,
+                  items: SupportedFonts.values.map((e) => e.dropDown).toList(),
+                  value: _fontNameSelectedItem,
+                  onChanged: (SupportedFonts? changed) async {
+                    void updateSelectedItem(dynamic changed) async {
+                      if (changed is SupportedFonts) {
+                        setState(mounted, this.setState, () {
+                          _fontNameSelectedItem = changed;
+                        });
+                      }
                     }
-                  }
 
-                  if (changed != null) {
-                    var proceed =
-                        await widget.htmlToolbarOptions.onDropdownChanged?.call(
-                                DropdownType.fontName,
-                                changed,
-                                updateSelectedItem) ??
-                            true;
-                    if (proceed) {
-                      widget.controller
-                          .execCommand('fontName', argument: changed);
-                      updateSelectedItem(changed);
+                    if (changed != null) {
+                      var proceed = await widget.htmlToolbarOptions.onDropdownChanged
+                              ?.call(DropdownType.fontName, changed, updateSelectedItem) ??
+                          true;
+                      if (proceed) {
+                        widget.controller.execCommand('fontName', argument: changed.fontName);
+                        updateSelectedItem(changed);
+                      }
                     }
-                  }
-                },
+                  },
+                ),
               ),
             ),
           ));

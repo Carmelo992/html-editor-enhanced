@@ -22,6 +22,7 @@ class HtmlEditorWidget extends StatefulWidget {
     required this.htmlToolbarOptions,
     required this.otherOptions,
     required this.initBC,
+    required this.uploadImage,
   }) : super(key: key);
 
   final HtmlEditorController controller;
@@ -31,6 +32,7 @@ class HtmlEditorWidget extends StatefulWidget {
   final HtmlToolbarOptions htmlToolbarOptions;
   final OtherOptions otherOptions;
   final BuildContext initBC;
+  final Future<String> Function(Uint8List)? uploadImage;
 
   @override
   _HtmlEditorWidgetWebState createState() => _HtmlEditorWidgetWebState();
@@ -553,7 +555,9 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                   key: toolbarKey,
                   controller: widget.controller,
                   htmlToolbarOptions: widget.htmlToolbarOptions,
-                  callbacks: widget.callbacks)
+                  callbacks: widget.callbacks,
+                  uploadImage: widget.uploadImage,
+                )
               : Container(height: 0, width: 0),
           Expanded(
               child: Directionality(
@@ -578,7 +582,9 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                   key: toolbarKey,
                   controller: widget.controller,
                   htmlToolbarOptions: widget.htmlToolbarOptions,
-                  callbacks: widget.callbacks)
+                  callbacks: widget.callbacks,
+                  uploadImage: widget.uploadImage,
+                )
               : Container(height: 0, width: 0),
         ],
       ),
