@@ -1827,9 +1827,6 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                         ),
                                         ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                              backgroundColor: Theme.of(context)
-                                                  .dialogTheme
-                                                  .backgroundColor,
                                               padding: EdgeInsets.only(
                                                   left: 5, right: 5),
                                               elevation: 0.0),
@@ -1838,12 +1835,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                               openNewTab = !openNewTab;
                                             });
                                           },
-                                          child: Text('Open in new window',
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge
-                                                      ?.color)),
+                                          child: Text('Open in new window'),
                                         ),
                                       ],
                                     ),
@@ -1929,10 +1921,6 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                         decoration: InputDecoration(
                                           prefixIcon: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    Theme.of(context)
-                                                        .dialogTheme
-                                                        .backgroundColor,
                                                 padding: EdgeInsets.only(
                                                     left: 5, right: 5),
                                                 elevation: 0.0),
@@ -1953,12 +1941,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                                 });
                                               }
                                             },
-                                            child: Text('Choose image',
-                                                style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge
-                                                        ?.color)),
+                                            child: Text('Choose image'),
                                           ),
                                           suffixIcon: result != null
                                               ? IconButton(
@@ -2094,9 +2077,6 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                       decoration: InputDecoration(
                                         prefixIcon: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                              backgroundColor: Theme.of(context)
-                                                  .dialogTheme
-                                                  .backgroundColor,
                                               padding: EdgeInsets.only(
                                                   left: 5, right: 5),
                                               elevation: 0.0),
@@ -2117,12 +2097,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                               });
                                             }
                                           },
-                                          child: Text('Choose audio',
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge
-                                                      ?.color)),
+                                          child: Text('Choose audio'),
                                         ),
                                         suffixIcon: result != null
                                             ? IconButton(
@@ -2247,9 +2222,6 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                       decoration: InputDecoration(
                                         prefixIcon: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                              backgroundColor: Theme.of(context)
-                                                  .dialogTheme
-                                                  .backgroundColor,
                                               padding: EdgeInsets.only(
                                                   left: 5, right: 5),
                                               elevation: 0.0),
@@ -2270,12 +2242,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                               });
                                             }
                                           },
-                                          child: Text('Choose video',
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge
-                                                      ?.color)),
+                                          child: Text('Choose video'),
                                         ),
                                         suffixIcon: result != null
                                             ? IconButton(
@@ -2400,9 +2367,6 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                       decoration: InputDecoration(
                                         prefixIcon: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                              backgroundColor: Theme.of(context)
-                                                  .dialogTheme
-                                                  .backgroundColor,
                                               padding: EdgeInsets.only(
                                                   left: 5, right: 5),
                                               elevation: 0.0),
@@ -2423,12 +2387,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                               });
                                             }
                                           },
-                                          child: Text('Choose file',
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge
-                                                      ?.color)),
+                                          child: Text('Choose file'),
                                         ),
                                         suffixIcon: result != null
                                             ? IconButton(
