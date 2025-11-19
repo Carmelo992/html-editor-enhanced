@@ -2022,18 +2022,20 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                     });
                                   } else if (filename.text.isNotEmpty &&
                                       result?.files.single.bytes != null) {
-                                    var base64Data = base64
-                                        .encode(result!.files.single.bytes!);
+
+                                    var url = await widget.uploadImage?.call(result!.files.single.bytes!);
+                                    if(url == null) {
+                                      Navigator.of(context).pop();
+                                      return;
+                                    }
                                     var proceed = await widget
                                             .htmlToolbarOptions
-                                            .mediaUploadInterceptor
-                                            ?.call(result!.files.single,
+                                            .mediaLinkInsertInterceptor
+                                            ?.call(url,
                                                 InsertFileType.image) ??
                                         true;
                                     if (proceed) {
-                                      widget.controller.insertHtml(
-                                          "<img src='data:image/${result!.files.single.extension};base64,$base64Data' data-filename='${result!.files.single.name}' alt="
-                                          "/>");
+                                      widget.controller.insertNetworkImage(url);
                                     }
                                     Navigator.of(context).pop();
                                   } else {
